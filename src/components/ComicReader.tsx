@@ -2,13 +2,12 @@ import React, { useEffect } from 'react';
 import { motion } from 'motion/react';
 import { COMIC_PAGES } from '../data/comicData';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
+import { useParams, useNavigate, Link } from 'react-router-dom';
 
-interface ComicReaderProps {
-  pageId: string;
-  onNavigate: (id: string) => void;
-}
+export default function ComicReader() {
+  const { pageId } = useParams<{ pageId: string }>();
+  const navigate = useNavigate();
 
-export default function ComicReader({ pageId, onNavigate }: ComicReaderProps) {
   if (COMIC_PAGES.length === 0) {
     return <div className="text-[#444] font-mono p-10">Initializing starmaps...</div>;
   }
@@ -73,13 +72,13 @@ export default function ComicReader({ pageId, onNavigate }: ComicReaderProps) {
       {/* Compact Navigation Buttons */}
       <div className="mt-10 w-full max-w-2xl flex justify-center items-center gap-4">
         {prevPage ? (
-          <button 
-            onClick={() => onNavigate(prevPage.id)}
+          <Link 
+            to={`/comic/${prevPage.id}`}
             className="px-6 py-2 bg-[#111] border border-[#222] hover:border-[#444] text-[#888] hover:text-white font-bold text-sm rounded-sm transition-all flex items-center gap-2 group"
           >
             <ChevronLeft size={16} className="group-hover:-translate-x-0.5 transition-transform" />
             Previous
-          </button>
+          </Link>
         ) : (
           <div className="px-6 py-2 border border-transparent text-[#222] font-bold text-sm flex items-center gap-2 opacity-50 cursor-default">
             <ChevronLeft size={16} />
@@ -88,13 +87,13 @@ export default function ComicReader({ pageId, onNavigate }: ComicReaderProps) {
         )}
 
         {nextPage ? (
-          <button 
-            onClick={() => onNavigate(nextPage.id)}
+          <Link 
+            to={`/comic/${nextPage.id}`}
             className="px-8 py-2 bg-[#1a1a1a] border border-[#333] hover:border-[#bb8afb] hover:bg-[#222] text-[#bb8afb] font-bold text-sm rounded-sm transition-all flex items-center gap-2 group"
           >
             Next
             <ChevronRight size={16} className="group-hover:translate-x-0.5 transition-transform" />
-          </button>
+          </Link>
         ) : (
           <div className="px-8 py-2 border border-transparent text-[#222] font-bold text-sm opacity-50 cursor-default">
             Next
@@ -103,12 +102,12 @@ export default function ComicReader({ pageId, onNavigate }: ComicReaderProps) {
       </div>
 
       <div className="mt-4">
-        <button 
-          onClick={() => onNavigate(COMIC_PAGES[0].id)}
+        <Link 
+          to={`/comic/${COMIC_PAGES[0].id}`}
           className="text-[10px] text-[#444] hover:text-white transition-colors uppercase tracking-[0.2em]"
         >
           Start Over
-        </button>
+        </Link>
       </div>
 
       {/* Footer Info */}

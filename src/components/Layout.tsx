@@ -1,48 +1,46 @@
 import React from 'react';
 import { LayoutGrid, Play, Info, Newspaper, ChevronLeft, ChevronRight } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
+import { NavLink, useLocation } from 'react-router-dom';
 
 interface LayoutProps {
   children: React.ReactNode;
-  activeTab: 'comic' | 'directory' | 'art' | 'credits' | 'news';
-  setActiveTab: (tab: 'comic' | 'directory' | 'art' | 'credits' | 'news') => void;
 }
 
-export default function Layout({ children, activeTab, setActiveTab }: LayoutProps) {
+export default function Layout({ children }: LayoutProps) {
+  const location = useLocation();
+  const activeTab = location.pathname.startsWith('/comic') ? 'comic' : 
+                   location.pathname.startsWith('/directory') ? 'directory' :
+                   location.pathname.startsWith('/art') ? 'art' :
+                   location.pathname.startsWith('/credits') ? 'credits' :
+                   location.pathname.startsWith('/news') ? 'news' : 'comic';
+
+  const navItemClass = ({ isActive }: { isActive: boolean }) => 
+    `hover:text-white transition-colors flex items-center gap-2 ${isActive ? 'text-white' : ''}`;
+
   return (
     <div className="min-h-screen bg-[#050505] text-[#ccc] font-mono selection:bg-[#fff] selection:text-[#000] relative overflow-x-hidden">
       {/* Header */}
       <header className="border-b border-[#222] py-4 bg-[#0a0a0a] sticky top-0 z-50">
         <div className="max-w-4xl mx-auto px-4 flex flex-col items-center">
-          <h1 className="text-3xl font-bold tracking-tighter text-white mb-4 hover:text-[#00ff00] cursor-pointer transition-colors"
-              onClick={() => setActiveTab('comic')}>
-            STARLIGHT COMICS
-          </h1>
+          <NavLink to="/comic/0001">
+            <h1 className="text-3xl font-bold tracking-tighter text-white mb-4 hover:text-[#00ff00] cursor-pointer transition-colors">
+              STARLIGHT COMICS
+            </h1>
+          </NavLink>
           <nav className="flex gap-6 text-sm uppercase tracking-widest text-[#888]">
-            <button 
-              onClick={() => setActiveTab('directory')}
-              className={`hover:text-white transition-colors flex items-center gap-2 ${activeTab === 'directory' ? 'text-white' : ''}`}
-            >
+            <NavLink to="/directory" className={navItemClass}>
               <LayoutGrid size={16} /> Directory
-            </button>
-            <button 
-              onClick={() => setActiveTab('art')}
-              className={`hover:text-white transition-colors flex items-center gap-2 ${activeTab === 'art' ? 'text-white' : ''}`}
-            >
+            </NavLink>
+            <NavLink to="/art" className={navItemClass}>
               <Play size={16} /> Art
-            </button>
-            <button 
-              onClick={() => setActiveTab('credits')}
-              className={`hover:text-white transition-colors flex items-center gap-2 ${activeTab === 'credits' ? 'text-white' : ''}`}
-            >
+            </NavLink>
+            <NavLink to="/credits" className={navItemClass}>
               <Info size={16} /> Credits
-            </button>
-            <button 
-              onClick={() => setActiveTab('news')}
-              className={`hover:text-white transition-colors flex items-center gap-2 ${activeTab === 'news' ? 'text-white' : ''}`}
-            >
+            </NavLink>
+            <NavLink to="/news" className={navItemClass}>
               <Newspaper size={16} /> News
-            </button>
+            </NavLink>
           </nav>
         </div>
       </header>
