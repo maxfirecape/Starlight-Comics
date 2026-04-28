@@ -1,4 +1,4 @@
-import { ComicPage } from '../comicData';
+import { ComicPage } from '../../types';
 
 export const p0001_p0100: ComicPage[] = [
   {

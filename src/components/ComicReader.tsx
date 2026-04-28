@@ -9,6 +9,10 @@ interface ComicReaderProps {
 }
 
 export default function ComicReader({ pageId, onNavigate }: ComicReaderProps) {
+  if (COMIC_PAGES.length === 0) {
+    return <div className="text-[#444] font-mono p-10">Initializing starmaps...</div>;
+  }
+
   const page = COMIC_PAGES.find(p => p.id === pageId) || COMIC_PAGES[0];
   const currentIndex = COMIC_PAGES.findIndex(p => p.id === page.id);
   const prevPage = currentIndex > 0 ? COMIC_PAGES[currentIndex - 1] : null;

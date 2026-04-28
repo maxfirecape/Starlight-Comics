@@ -3,24 +3,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-// 1. Data Types
-export interface ComicPage {
-  id: string; // e.g. "0001"
-  title: string;
-  image?: string;
-  videoUrl?: string; 
-  text: string;
-  nextCommand: string;
-  nextPageId: string | null;
-  aspectRatio: "4:3" | "1:1";
-}
-
-export interface NewsPost {
-  date: string;
-  author: string;
-  title: string;
-  content: string;
-}
+import { ComicPage, NewsPost } from '../types';
 
 // 2. Importing Chunks (Scale this by adding more imports as you grow)
 import { p0001_p0100 } from './pages/p0001_p0100';

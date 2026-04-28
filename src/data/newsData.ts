@@ -1,4 +1,4 @@
-import { NewsPost } from './comicData';
+import { NewsPost } from '../types';
 
 export const NEWS_POSTS: NewsPost[] = [
   {
